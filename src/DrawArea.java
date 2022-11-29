@@ -2,22 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
-public class DrawArea extends JPanel implements MouseListener, MouseMotionListener {
-
+public class DrawArea extends JPanel implements MouseListener {
     int x,y;
-    LinkedList<Box> boxLinkedList = new LinkedList<>();
-    LinkedList<Object> connectionList = new LinkedList<>();
-    boolean boxClicked = false;
-    int boxNum = 0;
-    int boxNumDrag = 0;
+    LinkedList<Box> classLinkedList = new LinkedList<>();
+    LinkedList<associationCon> connectionList = new LinkedList<>();
+    int boxClicked = 0;
+    int classNum = 100;
 
-    DrawArea() {
-        addMouseMotionListener(this);
+    public DrawArea() {
         addMouseListener(this);
     }
+
 
     public void paintComponent(Graphics g) {
 
@@ -25,12 +22,18 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         g.fillRect(0, 0, 1000, 1000);
 
 
-        for (int i = 0; i < boxLinkedList.size(); i++){
+
+        for (int i = 0; i < classLinkedList.size(); i++){
             g.setColor(Color.yellow);
-            g.fillRect(boxLinkedList.get(i).getX1(),boxLinkedList.get(i).getY1(), 100,20);
+            g.fillRect(classLinkedList.get(i).getX(),classLinkedList.get(i).getY(), 100,20);
 
             g.setColor(Color.BLACK);
-            g.drawString(boxLinkedList.get(i).getName(), boxLinkedList.get(i).getX1() + 10,boxLinkedList.get(i).getY1() + 14);
+            g.drawString(classLinkedList.get(i).getName(), classLinkedList.get(i).getX() + 10,classLinkedList.get(i).getY() + 14);
+        }
+
+        for (int i = 0; i < connectionList.size(); i++){
+            g.drawLine(connectionList.get(i).getX1(), connectionList.get(i).getY1(), connectionList.get(i).getX2(), connectionList.get(i).getY2());
+            //g.drawLine(connectionList.get(i).getX2(), connectionList.get(i).getY2(), (int)connectionList.get(i).getCx(), (int)connectionList.get(i).getCy());
         }
 
 
@@ -41,41 +44,73 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         x = e.getX();
         y = e.getY();
 
-        if (boxNum == 0) {
-            for (int i = 0; i < boxLinkedList.size(); i++) {
-                if (x > boxLinkedList.get(i).getX1() && x < boxLinkedList.get(i).getX1() + 100)
-                    if (y > boxLinkedList.get(i).getY1() && y < boxLinkedList.get(i).getY1() + 20) {
+        if (classNum == 100) {
+            for (int i = 0; i < classLinkedList.size(); i++) {
+                if (x > classLinkedList.get(i).getX() && x < classLinkedList.get(i).getX() + 100)
+                    if (y > classLinkedList.get(i).getY() && y < classLinkedList.get(i).getY() + 20) {
                         System.out.println("box clicked");
-                        boxClicked = true;
-                        boxNum = i;
+                        boxClicked++;
+                        classNum = i;
                     }
             }
         } else {
-            for (int i = 0; i < boxLinkedList.size(); i++) {
-                if (x > boxLinkedList.get(i).getX1() && x < boxLinkedList.get(i).getX1() + 100)
-                    if (y > boxLinkedList.get(i).getY1() && y < boxLinkedList.get(i).getY1() + 20) {
-                        System.out.println("box clicked");
+            for (int i = 0; i < classLinkedList.size(); i++) {
+                if (x > classLinkedList.get(i).getX() && x < classLinkedList.get(i).getX() + 100)
+                    if (y > classLinkedList.get(i).getY() && y < classLinkedList.get(i).getY() + 20) {
+                        System.out.println("box clicked2");
+
+                        boxClicked++;
+                        ButtonGroup group = new ButtonGroup();
+                        JRadioButton asso = new JRadioButton("association");
+                        JRadioButton inhe = new JRadioButton("inheritance");
+                        JRadioButton comp = new JRadioButton("composition");
+                        group.add(asso);
+                        group.add(inhe);
+                        group.add(comp);
+                        JPanel panel = new JPanel();
+                        panel.add(asso);
+                        panel.add(inhe);
+                        panel.add(comp);
+                        JRadioButton[] buttons = {asso, inhe, comp};
+                        //System.out.println(JOptionPane.showOptionDialog(panel,"Type of connection", JOptionPane.DEFAULT_OPTION));
+
+                        String[] options = {"association", "inheritance", "composition"};
+
+                        String conResult = (String)JOptionPane.showInputDialog(null, "What is the target Nicotine level?", "Selection", JOptionPane.DEFAULT_OPTION, null, options, "0");
+                        //System.out.println(JOptionPane.showInputDialog(null, "What is the target Nicotine level?", "Selection", JOptionPane.DEFAULT_OPTION, null, options, "0"));
+
+                        switch (conResult) {
+                            case "association":
+                                connectionList.add(new associationCon(classLinkedList.get(classNum).getX(),classLinkedList.get(classNum).getY(),classLinkedList.get(i).getX(),classLinkedList.get(i).getY()));
+                                break;
+                            case "inheritance":
+
+                                break;
+                            case "composition":
+
+                                break;
+                        }
+
+                        classNum = 100;
+                        repaint();
 
 
-                        boxClicked = false;
-                        boxNum = 0;
                     }
             }
-
         }
 
 
-        if (!boxClicked) {
+        if (boxClicked == 0) {
 
             String name = JOptionPane.showInputDialog("Name class: ");
-            boxLinkedList.add(new Box(x, y, name));
+            classLinkedList.add(new Box(x, y, name));
 
             repaint();
 
             Main.addBox(name);
         }
 
-
+        if (boxClicked == 2) {boxClicked = 0;}
         //System.out.println(x + ", " + y);
     }
 
@@ -99,13 +134,4 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
 
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
 }
