@@ -1,31 +1,31 @@
-import java.awt.*;
-
 public class Box {
-    private int x1, y1;
+    private int x,y;
     private String name;
 
-    public Box(int x1, int y1, String name) {
-        this.x1 = x1;
-        this.y1 = y1;
+    public Box(int x, int y, String name) {
+        this.x = x;
+        this.y = y;
         this.name = name;
     }
-    public int getX1() {
-        return x1;
+
+    public int getX() {
+        return x;
     }
 
-    public int getY1() {
-        return y1;
+    public int getY() {
+        return y;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setX(int x1) {
-        this.x1 = x1;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public void setY1(int y1) {
-        this.y1 = y1;
+    public void setY(int y) {
+        this.y = y;
     }
 }
+
