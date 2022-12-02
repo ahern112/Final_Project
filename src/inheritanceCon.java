@@ -1,10 +1,3 @@
-/**
- * Inheritance Connection Class
- * @author John Angkahan
- * @version 1.0
- * Has connection properties
- */
-
 public class inheritanceCon {
     private int x1,x2,y1,y2;
     private double ax,ay, bx,by,cx,cy, angle1, alpha, beta;
