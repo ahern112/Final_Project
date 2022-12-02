@@ -1,9 +1,14 @@
+/**
+ * Association Connection Class
+ * @author John Angkahan
+ * @version 1.0
+ * Has connection properties
+ */
+
 public class associationCon {
     private int x1,x2,y1,y2;
     private double ax,ay, bx,by,cx,cy, angle1, alpha, beta;
     private double AB, AC, BC, x1A;
-
-
 
     public associationCon(int x1, int y1, int x2, int y2) {
         this.x1 = x1;

@@ -5,6 +5,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * DrawArea Class
+ * @author John Angkahan
+ * @author Annes Huynh
+ * @author Abraham
+ * @author Sing
+ * @version 1.0
+ *
+ */
 
 public class DrawArea extends JPanel implements MouseListener, MouseMotionListener {
     int x,y;
@@ -72,6 +83,59 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
 
 
 
+        }
+    }
+
+    /**
+     * clearArea method
+     * Clears all linked lists so that the canvas is cleared
+     */
+    public void clearArea() {
+        boxLinkedList.clear();
+        associationLinkedList.clear();
+        compositionLinkedList.clear();
+        inheritanceLinkedList.clear();
+        boxClicked = 0;
+        repaint();
+    }
+
+    /**
+     * updateTextArea method
+     * Clears text area and repaints with new connections
+     */
+    public void updateTextArea() {
+        // for every class in box linked list > create class > check for connections
+        for (int i = 0; i < boxLinkedList.size(); i++) {
+            Main.textArea.append("class " + boxLinkedList.get(i).getName());
+            // class has connections
+            if(!boxLinkedList.get(i).getConnections().isEmpty()) {
+                List<ConnectionText> currConnections = boxLinkedList.get(i).getConnections();
+                for (int j = 0; j < currConnections.size(); j++) {
+                    if (currConnections.get(j).getType() == "inheritance") {
+                        System.out.println("Class has inheritance");
+                        Main.textArea.append("\nextends " + currConnections.get(j).getBox().getName());
+                    }
+                }
+                Main.textArea.append(" {\n");
+                for (int j = 0; j < currConnections.size(); j++) {
+                    if (currConnections.get(j).getType() == "composition") {
+                        Main.textArea.append("  " + currConnections.get(j).getBox().getName() + "\n");
+                    }
+                }
+                for (int j = 0; j < currConnections.size(); j++) {
+                    if (currConnections.get(j).getType() == "association") {
+                        Main.textArea.append("  method() {\n    "
+                                + currConnections.get(j).getBox().getName()
+                                + "\n  }\n");
+                    }
+                }
+
+                Main.textArea.append("}\n\n");
+
+            } else {
+                Main.textArea.append(" {\n");
+                Main.textArea.append("}\n\n");
+            }
         }
     }
 
