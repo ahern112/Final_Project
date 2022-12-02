@@ -1,3 +1,11 @@
+/**
+ * Box Class
+ * @author Annes Huynh
+ * @author John Angkahan
+ * @version 1.0
+ * Has box properties
+ */
+
 public class Box {
     private int x,y;
     private String name;

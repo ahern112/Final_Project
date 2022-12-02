@@ -6,6 +6,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
+/**
+ * DrawArea Class
+ * @author John Angkahan
+ * @author Annes Huynh
+ * @author Abraham
+ * @version 1.0
+ *
+ */
+
 public class DrawArea extends JPanel implements MouseListener, MouseMotionListener {
     int x,y;
     LinkedList<Box> boxLinkedList = new LinkedList<>();
@@ -73,6 +82,18 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
 
 
         }
+    }
+
+    /**
+     * clearArea method
+     * Clears all linked lists so that the canvas is cleared
+     */
+    public void clearArea(){
+        boxLinkedList.clear();
+        associationLinkedList.clear();
+        compositionLinkedList.clear();
+        inheritanceLinkedList.clear();
+        repaint();
     }
 
     @Override
