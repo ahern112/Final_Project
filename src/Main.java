@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
  * @author Annes Huynh
  * @author Pablo
  * @version 1.0
- * An area where for a user to create class boxes
+ * An area where for a user to create class boxes, main UI
  * It initializes a JFrame, Text Area, and manages menu actions
  */
 
