@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
-public class DrawArea extends JPanel implements MouseListener {
+public class DrawArea extends JPanel implements MouseListener, MouseMotionListener {
     int x,y;
     LinkedList<Box> boxLinkedList = new LinkedList<>();
     LinkedList<associationCon> associationLinkedList = new LinkedList<>();
@@ -13,9 +15,13 @@ public class DrawArea extends JPanel implements MouseListener {
     int boxClicked = 0;
     int classNum = 100;
 
+    Box boxBeingDragged;
+    boolean isBoxBeingDragged;
+
 
     public DrawArea() {
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
 
@@ -132,13 +138,19 @@ public class DrawArea extends JPanel implements MouseListener {
 
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        System.out.println("Being released");
+        if(isBoxBeingDragged){
+            int x1 = e.getX();
+            int y1 = e.getY();
+            boxBeingDragged.setX(x1);
+            boxBeingDragged.setY(y1);
+            isBoxBeingDragged = false;
+            boxBeingDragged = null;
+            repaint();
+        }
 
     }
 
@@ -152,4 +164,44 @@ public class DrawArea extends JPanel implements MouseListener {
 
     }
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println("Mouse Pressed");
+        int x1 = e.getX();
+        int y1 = e.getY();
+        // loop through to see if the pressed had a box on it based off coordinates
+        for (int i = 0; i < boxLinkedList.size(); i++){
+            // g.fillRect(boxLinkedList.get(i).getX(), boxLinkedList.get(i).getY(), 100,20);
+            if((boxLinkedList.get(i).getX() + 100 >= x1) && (boxLinkedList.get(i).getY() + 20 >= y1)){
+                // set box dragging
+                isBoxBeingDragged = true;
+                boxBeingDragged = boxLinkedList.get(i);
+                System.out.println("THIS WAS A BOX");
+                break;
+            }
+            System.out.println(boxLinkedList.get(i).getX() + ", " + boxLinkedList.get(i).getY());
+
+        }
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        System.out.println("Mouse dragged");
+        if(isBoxBeingDragged) {
+            int x1 = e.getX();
+            int y1 = e.getY();
+            boxBeingDragged.setX(x1);
+            boxBeingDragged.setY(y1);
+            repaint();
+            System.out.println(x1 + ", " + y1);
+        }
+
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        //System.out.println("Mouse MOved");
+    }
 }
