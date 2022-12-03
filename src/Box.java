@@ -1,6 +1,4 @@
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,5 +46,4 @@ public class Box {
         ConnectionText newConnect = new ConnectionText(string,connect);
         connections.add(newConnect);
     }
-}
 

@@ -117,7 +117,6 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         }
         return null;
     }
-
     public Box returnBoxByName(String className) {
         for (int i = 0; i < boxLinkedList.size(); i++) {
             if(boxLinkedList.get(i).getName().equals(className)) {
@@ -243,8 +242,6 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
                 default:
                     break;
             }
-
-
         } else {
             // if no box is clicked then we have to create a class
             String name = JOptionPane.showInputDialog("Name class: ");
