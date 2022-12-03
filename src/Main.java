@@ -2,11 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.io.*;
 
 /**
  * CSC 308 Final Project: UML
  * @author Annes Huynh
- * @author Pablo
+ * @author Pablo Gonzalez
  * @version 1.0
  * An area where for a user to create class boxes, main UI
  * It initializes a JFrame, Text Area, and manages menu actions
@@ -15,6 +19,7 @@ import java.awt.event.ActionEvent;
 public class Main extends JFrame implements ActionListener{
     static JTextArea textArea = new JTextArea(25,15);
     private DrawArea centerPanel;
+
 
     public static void main(String[] args) {
         Main window = new Main();
@@ -34,12 +39,15 @@ public class Main extends JFrame implements ActionListener{
         JMenuItem open = new JMenuItem("New");
         JMenuItem save = new JMenuItem("Save");
         JMenuItem quit = new JMenuItem("Quit");
+        JMenuItem load = new JMenuItem("Load");
         file.add(open);
+        file.add(load);
         file.add(save);
         file.add(quit);
         setJMenuBar(menu);
 
         open.addActionListener(this);
+        load.addActionListener(this);
         save.addActionListener(this);
         quit.addActionListener(this);
 
@@ -69,9 +77,38 @@ public class Main extends JFrame implements ActionListener{
                 centerPanel.clearArea();
                 textArea.setText("");
                 break;
+            case "Load":
+                System.out.println("Loading Stored Diagram");
+                try {
+                    FileInputStream fileIn = new FileInputStream("myUML.ser");
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    ArrayList<Object> loadData = (ArrayList<Object>) in.readObject();
+                    centerPanel.boxLinkedList = (LinkedList<Box>) loadData.get(0);
+                    centerPanel.associationLinkedList = (LinkedList<associationCon>) loadData.get(1);
+                    centerPanel.inheritanceLinkedList = (LinkedList<inheritanceCon>) loadData.get(2);
+                    centerPanel.compositionLinkedList = (LinkedList<compositionCon>) loadData.get(3);
+                    in.close();
+                    fileIn.close();
+                    repaint();
+                    centerPanel.updateTextArea();
+                } catch (IOException | ClassNotFoundException i) {
+                    i.printStackTrace();
+                }
+
+                break;
             case "Save":
                 System.out.println("Saving Current Diagram");
-
+                ArrayList<Object> data = centerPanel.getData();
+                try {
+                    FileOutputStream fileOut = new FileOutputStream("myUML.ser");
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(data);
+                    out.flush();
+                    out.close();
+                    JOptionPane.showMessageDialog(null, "UML diagram successfully saved to myUML.ser");
+                } catch (IOException i) {
+                    i.printStackTrace();
+                }
                 break;
             case "Quit":
                 System.out.println("Exiting Program");

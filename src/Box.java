@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 /**
  * Box Class
@@ -10,7 +11,7 @@ import java.util.List;
  * Has box properties
  */
 
-public class Box {
+public class Box implements Serializable {
     private int x, y;
     private String name;
     List<ConnectionText> connections = new ArrayList<>();

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Inheritance Connection Class
  * @author John Angkahan
@@ -7,7 +9,7 @@
  * Has connection properties
  */
 
-public class inheritanceCon {
+public class inheritanceCon implements Serializable {
     //private int x1,x2,y1,y2;
     Box boxOne, boxTwo;
     // private double ax,ay,by,cy, angle1, beta;
