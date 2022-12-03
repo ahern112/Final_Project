@@ -1,6 +1,19 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Box Class
+ * @author Annes Huynh
+ * @author John Angkahan
+ * @version 1.0
+ * Has box properties
+ */
+
 public class Box {
-    private int x,y;
+    private int x, y;
     private String name;
+    List<ConnectionText> connections = new ArrayList<>();
 
     public Box(int x, int y, String name) {
         this.x = x;
@@ -26,6 +39,15 @@ public class Box {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public List<ConnectionText> getConnections() {
+        return connections;
+    }
+
+    public void addConnection(String string, Box connect) {
+        ConnectionText newConnect = new ConnectionText(string, connect);
+        connections.add(newConnect);
     }
 }
 

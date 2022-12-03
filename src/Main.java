@@ -1,10 +1,20 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+/**
+ * CSC 308 Final Project: UML
+ * @author Annes Huynh
+ * @author Pablo
+ * @version 1.0
+ * An area where for a user to create class boxes, main UI
+ * It initializes a JFrame, Text Area, and manages menu actions
+ */
+
 public class Main extends JFrame implements ActionListener{
     static JTextArea textArea = new JTextArea(25,15);
+    private DrawArea centerPanel;
 
     public static void main(String[] args) {
         Main window = new Main();
@@ -41,11 +51,8 @@ public class Main extends JFrame implements ActionListener{
         westPanel.add(scrollPane);
 
         // center
-        JPanel centerPanel = new DrawArea();
+        centerPanel = new DrawArea();
         centerPanel.setBackground(new Color(203,205,255));
-
-        // bottom
-        JPanel bottomPanel = new JPanel();
 
         // frame
         BorderLayout layout = new BorderLayout();
@@ -57,20 +64,24 @@ public class Main extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Open":
-                System.out.println("OPEN ME ");
-                break;
             case "New":
-                System.out.println("NEW ME");
+                System.out.println("New Diagram");
+                centerPanel.clearArea();
+                textArea.setText("");
                 break;
             case "Save":
-                System.out.println("SAVE ME");
+                System.out.println("Saving Current Diagram");
+
                 break;
-            case "Help":
-                System.out.println("HELP ME");
+            case "Quit":
+                System.out.println("Exiting Program");
+                System.exit(0);
+                break;
+            case "About":
+                System.out.println("CSC 308 Group Final Project");
                 break;
             default:
-                System.out.println("NO IDEA BROTHER");
+                System.out.println("No Action Selected");
                 break;
 
         }
