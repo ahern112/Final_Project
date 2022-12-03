@@ -145,10 +145,12 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
      * Clears text area and repaints with new connections
      */
     public void updateTextArea() {
+        Main.textArea.setText("");  // refresh
         // for every class in box linked list > create class > check for connections
         for (int i = 0; i < boxLinkedList.size(); i++) {
             Main.textArea.append("class " + boxLinkedList.get(i).getName());
             // class has connections
+            System.out.println("Print Connections: " + boxLinkedList.get(i).getConnections());
             if(!boxLinkedList.get(i).getConnections().isEmpty()) {
                 List<ConnectionText> currConnections = boxLinkedList.get(i).getConnections();
                 for (int j = 0; j < currConnections.size(); j++) {
@@ -171,12 +173,10 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
                     }
                 }
 
-                Main.textArea.append("}\n\n");
-
             } else {
                 Main.textArea.append(" {\n");
-                Main.textArea.append("}\n\n");
             }
+            Main.textArea.append("}\n\n");
         }
     }
 
@@ -223,17 +223,21 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
                         case "association":
                             associationLinkedList.add(new associationCon(boxBeingChanged, secondBox));
                             //associationLinkedList.add(new associationCon(boxBeingChanged.getX(), boxBeingChanged.getY(), secondBox.getX(), secondBox.getY()));
+                            boxBeingChanged.addConnection("association", secondBox);
                             repaint();
                             break;
                         case "inheritance":
                             inheritanceLinkedList.add(new inheritanceCon(boxBeingChanged, secondBox));
+                            boxBeingChanged.addConnection("inheritance", secondBox);
                             repaint();
                             break;
                         case "composition":
                             compositionLinkedList.add(new compositionCon(boxBeingChanged, secondBox));
+                            boxBeingChanged.addConnection("composition", secondBox);
                             repaint();
                             break;
                     }
+                    updateTextArea();
                     repaint();
                     break;
                 default:
@@ -248,7 +252,7 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
             System.out.println(x + ", " + y);
             repaint();
 
-            Main.addBox(name);
+            updateTextArea();
         }
     }
 

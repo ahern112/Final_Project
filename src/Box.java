@@ -1,4 +1,6 @@
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
 public class Box {
     private int x,y;
     private String name;
-    List<ConnectionText> connections;
+    List<ConnectionText> connections = new ArrayList<>();
 
     public Box(int x, int y, String name) {
         this.x = x;
@@ -41,5 +43,10 @@ public class Box {
     }
 
     public List<ConnectionText> getConnections() { return connections; }
+
+    public void addConnection(String string, Box connect) {
+        ConnectionText newConnect = new ConnectionText(string,connect);
+        connections.add(newConnect);
+    }
 }
 
