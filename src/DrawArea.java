@@ -183,9 +183,14 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
      */
     public void updateTextArea() {
         Main.textArea.setText("");  // refresh
+
         // for every class in box linked list > create class > check for connections
         for (int i = 0; i < boxLinkedList.size(); i++) {
+            //List<ConnectionText> curConnections = boxLinkedList.get(i).getConnections();
+
             Main.textArea.append("class " + boxLinkedList.get(i).getName());
+            //Main.textArea.append("  \n" + curConnections.get(i).getBox().getName() + "\n");
+
             // class has connections
             //System.out.println("Print Connections: " + boxLinkedList.get(i).getConnections());
             if(!boxLinkedList.get(i).getConnections().isEmpty()) {
@@ -238,22 +243,28 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         if (isBoxClicked) {
             //once we know its clicked then we have to prompt them to ask whether they want to add a method or a link
             Box boxBeingChanged = returnBox(x, y);
-            String[] op1 = {"UML", "Method"};
+            String[] op1 = {"UML", "Attributes or Method"};
             String result1 = (String)JOptionPane.showInputDialog(null, "What do you want to create:", "Selection", JOptionPane.DEFAULT_OPTION, null, op1, "0");
             switch (result1) {
-                case "Method":
+                case "Attributes or Method":
                     //boxLinkedList.
-                    String[] option = {"Add a variable", "Add a method"};
+                    String[] option = {"Variable Name", "Method Name"};
                     String attribute_or_method = (String)JOptionPane.showInputDialog(null, "Add a Method or Variable?", "Selection", JOptionPane.DEFAULT_OPTION, null, option, "0");
                     switch (attribute_or_method){
-                        case "Add a variable":
-                            System.out.println("added a variable");
+                        case "Variable Name":
+                           //System.out.println("added a variable");
+                            String variableName = JOptionPane.showInputDialog("Variable Name: ");
+                            boxBeingChanged.addConnection("Variable Name", variableName);
+
                             break;
-                        case "Add a method":
-                            System.out.println();
+                        case "Method Name":
+                            //System.out.println("added a method");
+                            String methodName = JOptionPane.showInputDialog("Method Name: ");
+                            boxBeingChanged.addConnection("Method Name", methodName);
+
                             break;
                     }
-
+                break;
 
                 case "UML":
 
@@ -292,6 +303,7 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
             // if no box is clicked then we have to create a class
             String name = JOptionPane.showInputDialog("Name class: ");
             boxLinkedList.add(new Box(x, y, name));
+            if(name == null) boxLinkedList.removeLast();
             System.out.println(x + ", " + y);
             repaint();
 
