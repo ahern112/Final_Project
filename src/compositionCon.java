@@ -16,7 +16,11 @@ public class compositionCon implements Serializable {
     private double AB, AC, BC, x1A;
 
 
-
+    /**
+     * Class constructor.
+     * @param boxOne
+     * @param boxTwo
+     */
     public compositionCon(Box boxOne, Box boxTwo) {
         this.boxOne = boxOne;
         this.boxTwo = boxTwo;
