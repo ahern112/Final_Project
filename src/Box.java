@@ -14,6 +14,7 @@ import java.io.*;
 public class Box implements Serializable {
     private int x, y;
     private String name;
+    private String var_or_method_name;
     List<ConnectionText> connections = new ArrayList<>();
 
     public Box(int x, int y, String name) {
@@ -48,6 +49,11 @@ public class Box implements Serializable {
 
     public void addConnection(String string, Box connect) {
         ConnectionText newConnect = new ConnectionText(string, connect);
+        connections.add(newConnect);
+    }
+
+    public void addConnection(String string, String var_or_method_name) {
+        ConnectionText newConnect = new ConnectionText(string, var_or_method_name);
         connections.add(newConnect);
     }
 }

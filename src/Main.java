@@ -142,5 +142,7 @@ public class Main extends JFrame implements ActionListener{
         textArea.append("\n");
         textArea.append("}\n");
 
+        System.out.println("Sing hello");
+
     }
 }

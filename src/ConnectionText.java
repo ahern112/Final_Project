@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class ConnectionText implements Serializable {
     private String type;    // assoc, comp, or inheritance
+    private String var_or_method_name;    // assoc, comp, or inheritance
     private Box box;
 
     /**
@@ -20,6 +21,11 @@ public class ConnectionText implements Serializable {
     public ConnectionText(String type, Box box) {
         this.type = type;
         this.box = box;
+    }
+
+    public ConnectionText(String type, String var_method_name) {
+        this.type = type;
+        this.var_or_method_name = var_method_name;
     }
 
     public String getType() {
