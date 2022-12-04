@@ -16,7 +16,11 @@ public class associationCon implements Serializable {
     private double AB, AC, BC, x1A;
 
 
-
+    /**
+     * Class constructor
+     * @param boxOne
+     * @param boxTwo
+     */
     public associationCon(Box boxOne, Box boxTwo) {
         this.boxOne = boxOne;
         this.boxTwo = boxTwo;

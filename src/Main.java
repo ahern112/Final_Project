@@ -1,11 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.Array;
+import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.io.*;
 
 /**
  * CSC 308 Final Project: UML
@@ -20,7 +19,10 @@ public class Main extends JFrame implements ActionListener{
     static JTextArea textArea = new JTextArea(25,15);
     private DrawArea centerPanel;
 
-
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Main window = new Main();
         window.setSize(750, 750);
@@ -28,6 +30,9 @@ public class Main extends JFrame implements ActionListener{
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Class Constructor
+     */
     Main() {
         super("Final Project");
 
@@ -69,6 +74,10 @@ public class Main extends JFrame implements ActionListener{
         add(centerPanel, BorderLayout.CENTER);
     }
 
+    /**
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -124,6 +133,10 @@ public class Main extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     *
+     * @param name the name of the box to be added to the text area
+     */
     public static void addBox(String name) {
         textArea.append("class " + name + " {\n");
         textArea.append("\n");

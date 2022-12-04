@@ -37,11 +37,17 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
     //variables for handling Box click and showing selection( add method, variables OR 3 of the relationship arrows)
     boolean isBoxClicked;
 
+    /**
+     * Class constructor.
+     */
     public DrawArea() {
         addMouseListener(this);
         addMouseMotionListener(this);
     }
 
+    /**
+     * @return all the necessary data to recreate the UML diagram after deserialization
+     */
     public ArrayList<Object> getData() {
         ArrayList<Object> data = new ArrayList<>();
         data.add(boxLinkedList);
@@ -50,6 +56,11 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         data.add(compositionLinkedList);
         return data;
     }
+
+    /**
+     *
+     * @param g the <code>Graphics</code> object to protect
+     */
     public void paintComponent(Graphics g) {
 
         g.setColor(new Color(203,205,255));
@@ -101,6 +112,12 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return true if mouse clicked on existing box
+     */
     public boolean checkForBox(int x, int y) {
         for (int i = 0; i < boxLinkedList.size(); i++) {
             System.out.println(boxLinkedList.get(i).getName() + ": " + boxLinkedList.get(i).getX() + ", " + boxLinkedList.get(i).getY());
@@ -115,6 +132,12 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         return false;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return Box object that was clicked on
+     */
     public Box returnBox(int x, int y) {
         for (int i = 0; i < boxLinkedList.size(); i++) {
             //System.out.println(boxLinkedList.get(i).getX() + ", dis " + boxLinkedList.get(i).getY() + " " + x + ", " + y);
@@ -126,6 +149,12 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         }
         return null;
     }
+
+    /**
+     *
+     * @param className
+     * @return name of Box object that was clicked on
+     */
     public Box returnBoxByName(String className) {
         for (int i = 0; i < boxLinkedList.size(); i++) {
             if(boxLinkedList.get(i).getName().equals(className)) {
@@ -192,6 +221,10 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("mouse clicked");
@@ -266,10 +299,6 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         }
     }
 
-    public LinkedList<Box> getBoxLinkedList() {
-        return boxLinkedList;
-    }
-
     @Override
     public void mouseEntered(MouseEvent e) {
 
@@ -301,6 +330,9 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * @param e the event to be processed
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
         System.out.println("Mouse dragged");
@@ -319,6 +351,9 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * @param e the event to be processed
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         System.out.println("Being released");
@@ -333,6 +368,9 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     * @param e the event to be processed
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         //System.out.println("Mouse MOved");
