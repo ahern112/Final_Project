@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * ConnectionText class
  * @author Annes Huynh
@@ -6,10 +8,15 @@
  * for the text area
  */
 
-public class ConnectionText {
+public class ConnectionText implements Serializable {
     private String type;    // assoc, comp, or inheritance
     private Box box;
 
+    /**
+     * Class constructor.
+     * @param type
+     * @param box
+     */
     public ConnectionText(String type, Box box) {
         this.type = type;
         this.box = box;

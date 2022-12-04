@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Association Connection Class
  * @author John Angkahan
@@ -7,14 +9,18 @@
  * Has connection properties
  */
 
-public class associationCon {
+public class associationCon implements Serializable {
     //private int x1,x2,y1,y2;
     Box boxOne, boxTwo;
     // private double ax,ay,by,cy, angle1, beta;
     private double AB, AC, BC, x1A;
 
 
-
+    /**
+     * Class constructor
+     * @param boxOne
+     * @param boxTwo
+     */
     public associationCon(Box boxOne, Box boxTwo) {
         this.boxOne = boxOne;
         this.boxTwo = boxTwo;
