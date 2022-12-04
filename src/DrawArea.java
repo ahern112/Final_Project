@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,8 +12,9 @@ import java.util.List;
  * DrawArea Class
  * @author John Angkahan
  * @author Annes Huynh
- * @author Abraham
- * @author Sing
+ * @author Abraham Hernandez
+ * @author Sing Tai
+ * @author Pablo Gonzalez
  * @version 1.0
  *
  */
@@ -40,7 +42,14 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         addMouseMotionListener(this);
     }
 
-
+    public ArrayList<Object> getData() {
+        ArrayList<Object> data = new ArrayList<>();
+        data.add(boxLinkedList);
+        data.add(associationLinkedList);
+        data.add(inheritanceLinkedList);
+        data.add(compositionLinkedList);
+        return data;
+    }
     public void paintComponent(Graphics g) {
 
         g.setColor(new Color(203,205,255));
@@ -149,23 +158,27 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
         for (int i = 0; i < boxLinkedList.size(); i++) {
             Main.textArea.append("class " + boxLinkedList.get(i).getName());
             // class has connections
-            System.out.println("Print Connections: " + boxLinkedList.get(i).getConnections());
+            //System.out.println("Print Connections: " + boxLinkedList.get(i).getConnections());
             if(!boxLinkedList.get(i).getConnections().isEmpty()) {
                 List<ConnectionText> currConnections = boxLinkedList.get(i).getConnections();
                 for (int j = 0; j < currConnections.size(); j++) {
-                    if (currConnections.get(j).getType() == "inheritance") {
+                    //System.out.println(boxLinkedList.get(i).getName() + ": " + currConnections.get(j).getType());
+                    System.out.println(currConnections.get(j).getType().equals("inheritance"));
+                    if (currConnections.get(j).getType().equals("inheritance")) {
                         System.out.println("Class has inheritance");
                         Main.textArea.append("\nextends " + currConnections.get(j).getBox().getName());
                     }
                 }
                 Main.textArea.append(" {\n");
                 for (int j = 0; j < currConnections.size(); j++) {
-                    if (currConnections.get(j).getType() == "composition") {
+                    //System.out.println("2nd loop");
+                    if (currConnections.get(j).getType().equals("composition")) {
                         Main.textArea.append("  " + currConnections.get(j).getBox().getName() + "\n");
                     }
                 }
                 for (int j = 0; j < currConnections.size(); j++) {
-                    if (currConnections.get(j).getType() == "association") {
+                    //System.out.println("3rd loop");
+                    if (currConnections.get(j).getType().equals("association")) {
                         Main.textArea.append("  method() {\n    "
                                 + currConnections.get(j).getBox().getName()
                                 + "\n  }\n");
@@ -251,6 +264,10 @@ public class DrawArea extends JPanel implements MouseListener, MouseMotionListen
 
             updateTextArea();
         }
+    }
+
+    public LinkedList<Box> getBoxLinkedList() {
+        return boxLinkedList;
     }
 
     @Override
